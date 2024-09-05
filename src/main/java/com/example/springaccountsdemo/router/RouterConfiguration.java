@@ -18,6 +18,7 @@ public class RouterConfiguration {
         return RouterFunctions
                 .route()
                 .GET("/hello", handler::hello)
+                .GET("/test", handler::test)
                 .build();
     }
 
@@ -26,6 +27,10 @@ public class RouterConfiguration {
 
         public Mono<ServerResponse> hello(ServerRequest request) {
             return new HelloHandlerFunction().handle(request);
+        }
+
+        public Mono<ServerResponse> test(ServerRequest request) {
+            return new TestHandlerFunction().handle(request);
         }
 
     }
@@ -41,6 +46,18 @@ public class RouterConfiguration {
                     .ok()
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue("Hello from handler function");
+        }
+    }
+
+    @Component
+    @NonNullApi
+    public static class TestHandlerFunction implements HandlerFunction<ServerResponse> {
+        @Override
+        public Mono<ServerResponse> handle(@NonNull ServerRequest request) {
+            return ServerResponse
+                    .ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .bodyValue("Hello from handler test function");
         }
     }
 
