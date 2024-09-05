@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.reactive.function.server.*;
 import reactor.core.publisher.Mono;
 import reactor.util.annotation.NonNull;
