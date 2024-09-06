@@ -10,8 +10,8 @@ on:
       - development
   pull_request:
     branches:
-      - "test-branch"
-      - "release/*"
+      - 'test-branch-1'
+      - 'release/**'
     types:
       - opened
       - reopened
