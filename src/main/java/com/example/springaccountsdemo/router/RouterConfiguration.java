@@ -17,22 +17,22 @@ public class RouterConfiguration {
     public RouterFunction<ServerResponse> routerFunction(Handler handler) {
         return RouterFunctions
                 .route()
-                .GET("/hello", handler::hello)
+                .GET("/test", handler::test)
                 .build();
     }
 
     @Component
     public static class Handler {
 
-        public Mono<ServerResponse> hello(ServerRequest request) {
-            return new HelloHandlerFunction().handle(request);
+        public Mono<ServerResponse> test(ServerRequest request) {
+            return new TestHandlerFunction().handle(request);
         }
 
     }
 
     @Component
     @NonNullApi
-    public static class HelloHandlerFunction implements HandlerFunction<ServerResponse> {
+    public static class TestHandlerFunction implements HandlerFunction<ServerResponse> {
 
         @Override
         public Mono<ServerResponse> handle(@NonNull ServerRequest serverRequest) {
@@ -40,7 +40,7 @@ public class RouterConfiguration {
             return ServerResponse
                     .ok()
                     .contentType(MediaType.APPLICATION_JSON)
-                    .bodyValue("Hello from handler function");
+                    .bodyValue("Test from handler function");
         }
     }
 
