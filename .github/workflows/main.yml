@@ -10,7 +10,9 @@ on:
       - development
   pull_request:
     branches:
-      - 'test-branch-1'
+      - 'test-branch'
+      - 'main'
+      - 'development'
       - 'release/**'
     types:
       - opened
