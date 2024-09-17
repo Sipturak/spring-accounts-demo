@@ -4,6 +4,7 @@ on:
   release:
     types:
       - created
+      - released
   push:
     branches:
       - main
@@ -20,29 +21,28 @@ on:
       - ready_for_review
       - synchronize
 jobs:
-  java-job:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup JDK 21 microsoft
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'microsoft'
-  gradle-job:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup Gradle and run build
-        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+#  java-job:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Setup JDK 21 microsoft
+#        uses: actions/setup-java@v4
+#        with:
+#          java-version: '21'
+#          distribution: 'microsoft'
+#  gradle-job:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Setup Gradle and run build
+#        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-    needs:
-      - java-job
-      - gradle-job
+#    needs:
+#      - java-job
+#      - gradle-job
     #todo: calculate version and push tags
-    #todo: cache gradle packages
     #todo setup docker context
     #todo: setup docker build
     #todo: setup gcloud NP
@@ -56,5 +56,14 @@ jobs:
           server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+      - name: Cache gradle
+        id: cache-gradle
+        uses: actions/cache@v4
+        with:
+          path: ~/.gradle/caches
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            gradle-${{ runner.os }}-
+            gradle-
       - name: Build with gradle wrapper
         run: ./gradlew build
