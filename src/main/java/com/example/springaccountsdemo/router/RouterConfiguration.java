@@ -1,5 +1,6 @@
 package com.example.springaccountsdemo.router;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import io.micrometer.common.lang.NonNullApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,9 +29,12 @@ public class RouterConfiguration {
             return new HelloHandlerFunction().handle(request);
         }
 
+        public Mono<ServerResponse> cache(ServerRequest request, ServerResponse response) {
+            return new CacheHandlerFunction().handle(request);
+        }
+
     }
 
-    @Component
     @NonNullApi
     public static class HelloHandlerFunction implements HandlerFunction<ServerResponse> {
 
@@ -41,6 +45,18 @@ public class RouterConfiguration {
                     .ok()
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue("Hello from handler function");
+        }
+    }
+
+    @NonNullApi
+    public static class CacheHandlerFunction implements HandlerFunction<ServerResponse> {
+
+        @Override
+        public Mono<ServerResponse> handle(@NonNull ServerRequest request) {
+            return ServerResponse
+                    .ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .bodyValue("Hello from cache function");
         }
     }
 
