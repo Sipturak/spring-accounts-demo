@@ -38,7 +38,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      issues: read
+      pull-requests: write
       packages: write
+      id-token: write
 #    needs:
 #      - java-job
 #      - gradle-job
