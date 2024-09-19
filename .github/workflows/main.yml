@@ -38,7 +38,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      issues: read
+      pull-requests: write
       packages: write
+      id-token: write
 #    needs:
 #      - java-job
 #      - gradle-job
@@ -48,6 +51,16 @@ jobs:
     #todo: setup gcloud NP
     steps:
       - uses: actions/checkout@v4
+      - name: Create release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{secrets.MY_GITHUB_TOKEN}}
+        with:
+          tag_name: v1.0.0
+          release_name: Prerelease v1.0.0
+          prerelease: true
+          body: | 
+            Create pre_release for non production and testing
 
       - name: Setup JDK 22
         uses: actions/setup-java@v4
