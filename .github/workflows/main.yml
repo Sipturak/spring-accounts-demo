@@ -64,7 +64,7 @@ jobs:
         id: publish_tag
         run: | 
           git push --follow-tags
-          echo tag_name=${git describe HEAD --abbrev=0} >> $GITHUB_ENV
+          echo tag_name=$(git describe HEAD --abbrev=0) >> $GITHUB_ENV
 
       - name: Create release
         uses: actions/create-release@v1
