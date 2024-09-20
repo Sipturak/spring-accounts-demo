@@ -45,12 +45,14 @@ jobs:
 #    needs:
 #      - java-job
 #      - gradle-job
-    #todo: calculate version and push tags
     #todo setup docker context
     #todo: setup docker build
     #todo: setup gcloud NP
     steps:
-      - uses: actions/checkout@v4
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Create a tag
         run: |
@@ -72,6 +74,7 @@ jobs:
           tag_name: ${{steps.pubish_tag.tag_name}}
           release_name: Prerelease of ${{steps.pubish_tag.tag_name}}
           prerelease: true
+          body-path: RELEASE_BODY.md
           body: | 
             Create pre_release for non production and testing for ${{steps.pubish_tag.tag_name}}
 
