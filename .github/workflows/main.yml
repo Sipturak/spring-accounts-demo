@@ -71,12 +71,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.MY_GITHUB_TOKEN}}
         with:
-          tag_name: ${{steps.publish_tag.tag_name}}
-          release_name: Prerelease of ${{steps.publish_tag.tag_name}}
+          tag_name: ${{steps.publish_tag.outputs.tag_name}}
+          release_name: Prerelease of ${{steps.publish_tag.outputs.tag_name}}
           prerelease: true
           body-path: RELEASE_BODY.md
           body: | 
-            Create pre_release for non production and testing for ${{steps.publish_tag.tag_name}}
+            Create pre_release for non production and testing for ${{steps.publish_tag.outputs.tag_name}}
 
       - name: Setup JDK 22
         uses: actions/setup-java@v4
